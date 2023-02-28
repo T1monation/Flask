@@ -1,10 +1,16 @@
 from flask import Flask
-from flask import request
+from blog.report.views import report
+from blog.user.views import user
+from blog.article.views import article
 
-app = Flask(__name__)
+
+def create_app() -> Flask:
+    app = Flask(__name__)
+    register_blueprints(app)
+    return app
 
 
-@app.route("/<string:search>", methods=["GET", "POST"])
-def index(search: str):
-    name = request.args.get("search", None)
-    return f"Hello, {request.method}!", 201
+def register_blueprints(app: Flask):
+    app.register_blueprint(user)
+    app.register_blueprint(report)
+    app.register_blueprint(article)
