@@ -10,6 +10,10 @@ packages = [{include = "my_first_flask"}]
 python = "^3.10"
 flask = "^2.2.3"
 black = "^23.1.0"
+flask-sqlalchemy = "^3.0.3"
+psycopg2-binary = "^2.9.5"
+flask-login = "^0.6.2"
+mimesis = "^7.0.0"
 
 
 [tool.poetry.group.dev.dependencies]
