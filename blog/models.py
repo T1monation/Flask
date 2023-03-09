@@ -7,9 +7,17 @@ class User(db.Model, UserMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(255), unique=True)
+    name = db.Column(db.String(255))
     password = db.Column(db.String(255))
     psd = db.Column(db.String(255))
     articles = db.relationship("Article", backref="autors")
+
+    def __init__(self, email, name, password, psd, articles):
+        self.email = email
+        self.name = name
+        self.password = password
+        self.psd = psd
+        self.articles = articles
 
 
 class Article(db.Model):
@@ -19,3 +27,8 @@ class Article(db.Model):
     title = db.Column(db.String(255))
     text = db.Column(db.String)
     author_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+
+    def __init__(self, title, text, author_id):
+        self.title = title
+        self.text = text
+        self.author_id = author_id
