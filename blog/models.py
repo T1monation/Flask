@@ -1,5 +1,6 @@
 from blog.app import db
 from flask_login import UserMixin
+import sqlalchemy
 
 
 class User(db.Model, UserMixin):
@@ -7,9 +8,11 @@ class User(db.Model, UserMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(255), unique=True)
+    name = db.Column(db.String(255))
     password = db.Column(db.String(255))
     psd = db.Column(db.String(255))
     articles = db.relationship("Article", backref="autors")
+    is_admin = db.Column(db.Boolean, default=False)
 
 
 class Article(db.Model):

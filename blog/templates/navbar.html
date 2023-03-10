@@ -19,6 +19,11 @@
             <li class="nav-item">
               <a class="nav-link" href="{{ url_for('auth.logout')}}">Logout ({{ current_user.email }})</a>
             </li>
+            {% if current_user.is_admin %}
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('admin.admin_view')}}">Admin</a>
+            </li>
+            {% endif %}
           {% endif %}
 
         </ul>
