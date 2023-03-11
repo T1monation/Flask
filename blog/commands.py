@@ -5,13 +5,10 @@ from werkzeug.security import generate_password_hash
 import random
 
 
-@click.command("create-init-user")
-def create_init_user(num=100):
+@click.command("create-fake-data")
+def create_fake_data(num=100):
     from blog.models import User, Article
     from wsgi import app
-
-    with app.app_context():
-        db.create_all()
 
     with app.app_context():
         person = Person()
@@ -20,6 +17,8 @@ def create_init_user(num=100):
             db.session.add(
                 User(
                     email=person.email(),
+                    first_name=person.name(),
+                    last_name=person.last_name(),
                     password=generate_password_hash(paswd_str),
                     psd=paswd_str,
                 )
@@ -39,3 +38,17 @@ def create_init_user(num=100):
                 )
             )
         db.session.commit()
+
+
+@click.command("create-admin")
+def create_admin():
+    from blog.models import User
+    from blog.extensions import db
+
+    user_email = input("Input user email: ")
+    admin_candidate = User.query.filter_by(email=user_email).one_or_none()
+    if admin_candidate:
+        admin_candidate.is_admin = True
+        db.session.commit()
+    else:
+        print("User dosn't exist!")

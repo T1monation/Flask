@@ -15,6 +15,11 @@
           <li class="nav-item">
             <a class="nav-link" href="{{ url_for('article.article_list')}}">Articles</a>
           </li>
+          {% if not current_user.is_authenticated  %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('.login')}}">Login</a>
+          </li>
+          {% endif %}
           {% if current_user.is_authenticated  %}
             <li class="nav-item">
               <a class="nav-link" href="{{ url_for('auth.logout')}}">Logout ({{ current_user.email }})</a>
@@ -24,6 +29,11 @@
               <a class="nav-link" href="{{ url_for('admin.admin_view')}}">Admin</a>
             </li>
             {% endif %}
+          {% endif %}
+          {% if not current_user.is_authenticated  %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('user.register')}}">Register</a>
+          </li>
           {% endif %}
 
         </ul>
