@@ -31,9 +31,8 @@ def profile(pk: int):
     user = User.query.filter_by(id=pk).one_or_none()
     if not user:
         raise NotFound(f"User #{pk} dosen't exist!")
-    articles = Article.query.filter_by(author_id=pk).all()
-    print(articles)
-    return render_template("users/profile.html", user=user, articles=articles)
+
+    return render_template("users/profile.html", user=user)
 
 
 @user.route("register", methods=["GET", "POST"])

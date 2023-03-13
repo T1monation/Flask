@@ -6,8 +6,10 @@
 {% endblock %}
 
 {% block body %}
-    <h1>Author: <a href="{{url_for('user.profile', pk=article.author_id)}}">{{author.email}}</a></h1>
+    <h1>Author: <a href="{{url_for('user.profile', pk=article.author_id)}}">{{article.author.user.first_name}} {{article.author.user.last_name}}</a></h1>
     <h1>Title: {{ article.title}}</h1>
     <text>Article: {{ article.text }}</text>
+    <p>Created at: {{article.created_at}} </p>
+    <p>Updated at: {{article.updated_at}}</p>
 {% endblock %}
 

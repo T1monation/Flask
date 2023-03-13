@@ -7,7 +7,7 @@ import random
 
 @click.command("create-fake-data")
 def create_fake_data(num=100):
-    from blog.models import User, Article
+    from blog.models import User, Article, Author
     from wsgi import app
 
     with app.app_context():
@@ -27,6 +27,14 @@ def create_fake_data(num=100):
 
     with app.app_context():
         id_list = db.session.query(User.id).all()
+        id_list_normal = [el[0] for el in id_list]
+        for el in id_list_normal:
+            if random.randrange(0, 2, 1) == 1:
+                db.session.add(Author(users_id=el))
+        db.session.commit()
+
+    with app.app_context():
+        id_list = db.session.query(Author.id).all()
         id_list_normal = [el[0] for el in id_list]
         text_obj = Text()
         for el in range(num * 2):
