@@ -1,15 +1,31 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    {{ super() }}
-    Articles details
+Articles details
 {% endblock %}
 
 {% block body %}
-    <h1>Author: <a href="{{url_for('user.profile', pk=article.author_id)}}">{{article.author.user.first_name}} {{article.author.user.last_name}}</a></h1>
-    <h1>Title: {{ article.title}}</h1>
-    <text>Article: {{ article.text }}</text>
-    <p>Created at: {{article.created_at}} </p>
-    <p>Updated at: {{article.updated_at}}</p>
-{% endblock %}
+<div class="row">
+    <h1>{{ article. title }}</h1>
+</div>
+<div class="row">
+    <div class="col-md-12">{{ article.text }}</div>
+</div>
+<div class="row">
+    <div class="col-6">
+        <div><small class="text-muted"></small>Author: <a
+                href="{{url_for('user.profile', pk=article.author_id)}}">{{article.author.user.first_name}}
+                {{article.author.user.last_name}}</a> </div>
+        <div><small>Created at: {{article.created_at}}</small></div>
+        <div><small>Updated at: {{article.updated_at}}</small></div>
+        <div><small></small></div>
+    </div>
+    <div class="col-6">
+        {% for tag in article.tag %}
+        <a href="{{url_for('article.article_by_tag', tag_id=tag.id)}}"><span class="badge text-bg-primary">{{
+                tag.name }}</span></a>
+        {% endfor %}
+    </div>
+</div>
 
+{% endblock %}
