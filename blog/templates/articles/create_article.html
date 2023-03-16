@@ -2,23 +2,23 @@
 {% from "macro/formhelpers.html" import render_field %}
 
 {% block title %}
-    Create Article
+Create Article
 {% endblock %}
 
 {% block body %}
 {% if error %}
 {% for error in errors %}
-    <div class="alert alert-danger" role="alert">
-        {{ error }}
-    </div>\
+<div class="alert alert-danger" role="alert">
+    {{ error }}
+</div>\
 {% endfor %}
 {% endif %}
 <form method="POST">
 
     {{ form.csrf_token }}
-        {% for field in ['title', 'text'] %}
-            {{ render_field(form[field]) }}
-        {% endfor %}
+    {% for field in ['title', 'text', 'tags'] %}
+    {{ render_field(form[field]) }}
+    {% endfor %}
     {{ form.submit(class="btn btn-primary mb-3") }}
 </form>
 {% endblock %}

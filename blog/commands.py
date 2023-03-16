@@ -1,5 +1,5 @@
 from blog.extensions import db
-from mimesis import Person, Text
+from mimesis import Person, Text, Internet
 import click
 from werkzeug.security import generate_password_hash
 import random
@@ -7,7 +7,7 @@ import random
 
 @click.command("create-fake-data")
 def create_fake_data(num=100):
-    from blog.models import User, Article, Author
+    from blog.models import User, Article, Author, Tag
     from wsgi import app
 
     with app.app_context():
@@ -45,6 +45,26 @@ def create_fake_data(num=100):
                     author_id=random.choice(id_list_normal),
                 )
             )
+        db.session.commit()
+
+    with app.app_context():
+        tag = Internet()
+        for el in range(20):
+            db.session.add(Tag(name=tag.hashtags(1)))
+        db.session.commit()
+
+
+@click.command("create-tag")
+def create_tag():
+    from blog.models import Article, Tag
+    from wsgi import app
+
+    with app.app_context():
+        tag_list = Tag.query.all()
+        article_list = Article.query.all()
+        for article in article_list:
+            for el in range(random.randint(1, 5)):
+                article.tag.append(random.choice(tag_list))
         db.session.commit()
 
 
