@@ -18,6 +18,12 @@ class User(db.Model, UserMixin):
 
     author = relationship("Author", uselist=False, back_populates="user")
 
+    def __str__(self):
+        return f"{self.user.email} {self.user.id}"
+
+    def __unicode__(self):
+        return f"{self.user.email} {self.user.id}"
+
 
 class Article(db.Model):
     __tablename__ = "articles"
@@ -36,6 +42,12 @@ class Article(db.Model):
         "Tag", secondary="article_tag_association", back_populates="article"
     )
 
+    def __str__(self):
+        return self.title
+
+    def __unicode__(self):
+        return self.title
+
 
 class Author(db.Model):
     __tablename__ = "authors"
@@ -46,6 +58,12 @@ class Author(db.Model):
     user = relationship("User", back_populates="author")
     article = relationship("Article", back_populates="author")
 
+    def __str__(self):
+        return self.user.email
+
+    def __unicode__(self):
+        return self.user.email
+
 
 class Tag(db.Model):
     __tablename__ = "tags"
@@ -55,6 +73,12 @@ class Tag(db.Model):
     article = relationship(
         "Article", secondary="article_tag_association", back_populates="tag"
     )
+
+    def __str__(self):
+        return self.name
+
+    def __unicode__(self):
+        return self.name
 
 
 article_tag_associations_table = Table(
