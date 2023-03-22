@@ -26,6 +26,9 @@ def register_extensions(app):
             app=app,
             tags={
                 "Tag": "Tag API",
+                "User": "User API",
+                "Author": "Author API",
+                "Article": "Article API",
             },
         )
     ]
@@ -41,9 +44,23 @@ def register_extensions(app):
 
 def register_api_routes():
     from blog.api.tag import TagDetail, TagList
+    from blog.api.user import UserDetail, UserList
+    from blog.api.article import ArticleDetail, ArticleList
+    from blog.api.author import AuthorDetail, AuthorList
 
-    api.route(TagList, "tag_list", "/api/tags", tag='Tag')
-    api.route(TagDetail, "tag_detail", "/api/tags/<int:id>", tag="Tag")
+    api.route(TagList, 'tag_list', '/api/tags/', tag='Tag')
+    api.route(TagDetail, 'tag_detail', '/api/tags/<int:id>', tag='Tag')
+
+    api.route(UserList, 'user_list', '/api/users/', tag='User')
+    api.route(UserDetail, 'user_detail', '/api/users/<int:id>', tag='User')
+
+    api.route(AuthorList, 'author_list', '/api/authors/', tag='Author')
+    api.route(AuthorDetail, 'author_detail',
+              '/api/authors/<int:id>', tag='Author')
+
+    api.route(ArticleList, 'article_list', '/api/articles/', tag='Article')
+    api.route(ArticleDetail, 'article_detail',
+              '/api/articles/<int:id>', tag='Article')
 
 
 def register_blueprints(app: Flask):
@@ -58,7 +75,7 @@ def register_blueprints(app: Flask):
     app.register_blueprint(auth)
     app.register_blueprint(author)
 
-    admin.register_views()
+    # admin.register_views()
 
 
 def register_commands(app: Flask):

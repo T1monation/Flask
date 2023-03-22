@@ -24,6 +24,7 @@ combojsonapi = "1.1.1"
 pyyaml = "5.4.1"
 markupsafe = "2.0.1"
 mimesis = "^7.0.0"
+apispec = "4.7.1"
 
 
 [tool.poetry.group.dev.dependencies]
