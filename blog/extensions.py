@@ -7,16 +7,6 @@ from blog.admin.views import CustomAdminIndexView
 from flask_combo_jsonapi import Api
 
 
-# def create_api_spec_plugin(app):
-#     api_cpec_plugin = ApiSpecPlugin(
-#         app=app,
-#         tags={
-#             "Tags": "Tags API",
-#         },
-#     )
-#     return api_cpec_plugin
-
-
 login_manager = LoginManager()
 db = SQLAlchemy()
 migrate = Migrate()

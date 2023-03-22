@@ -1,14 +1,7 @@
 from flask import Flask
 from combojsonapi.spec import ApiSpecPlugin
 from blog import commands
-from blog.extensions import (
-    db,
-    login_manager,
-    migrate,
-    csrf,
-    admin,
-    api,
-)
+from blog.extensions import db, login_manager, migrate, csrf, admin, api
 from blog.models import User
 
 
@@ -37,6 +30,7 @@ def register_extensions(app):
         )
     ]
     api.init_app(app)
+
     login_manager.login_view = "auth.login"
     login_manager.init_app(app)
 
@@ -48,7 +42,7 @@ def register_extensions(app):
 def register_api_routes():
     from blog.api.tag import TagDetail, TagList
 
-    api.route(TagList, "tag_list", "/api/tags", tag="Tag")
+    api.route(TagList, "tag_list", "/api/tags", tag='Tag')
     api.route(TagDetail, "tag_detail", "/api/tags/<int:id>", tag="Tag")
 
 
