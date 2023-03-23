@@ -1,6 +1,7 @@
 from flask import Flask
+from combojsonapi.spec import ApiSpecPlugin
 from blog import commands
-from blog.extensions import db, login_manager, migrate, csrf, admin
+from blog.extensions import db, login_manager, migrate, csrf, admin, api
 from blog.models import User
 
 
@@ -11,6 +12,7 @@ def create_app() -> Flask:
     register_extensions(app)
     register_blueprints(app)
     register_commands(app)
+    register_api_routes()
     return app
 
 
@@ -19,6 +21,18 @@ def register_extensions(app):
     migrate.init_app(app, db, compare_type=True)
     csrf.init_app(app)
     admin.init_app(app)
+    api.plugins = [
+        ApiSpecPlugin(
+            app=app,
+            tags={
+                "Tag": "Tag API",
+                "User": "User API",
+                "Author": "Author API",
+                "Article": "Article API",
+            },
+        )
+    ]
+    api.init_app(app)
 
     login_manager.login_view = "auth.login"
     login_manager.init_app(app)
@@ -26,6 +40,27 @@ def register_extensions(app):
     @login_manager.user_loader
     def load_user(user_id):
         return User.query.get(int(user_id))
+
+
+def register_api_routes():
+    from blog.api.tag import TagDetail, TagList
+    from blog.api.user import UserDetail, UserList
+    from blog.api.article import ArticleDetail, ArticleList
+    from blog.api.author import AuthorDetail, AuthorList
+
+    api.route(TagList, 'tag_list', '/api/tags/', tag='Tag')
+    api.route(TagDetail, 'tag_detail', '/api/tags/<int:id>', tag='Tag')
+
+    api.route(UserList, 'user_list', '/api/users/', tag='User')
+    api.route(UserDetail, 'user_detail', '/api/users/<int:id>', tag='User')
+
+    api.route(AuthorList, 'author_list', '/api/authors/', tag='Author')
+    api.route(AuthorDetail, 'author_detail',
+              '/api/authors/<int:id>', tag='Author')
+
+    api.route(ArticleList, 'article_list', '/api/articles/', tag='Article')
+    api.route(ArticleDetail, 'article_detail',
+              '/api/articles/<int:id>', tag='Article')
 
 
 def register_blueprints(app: Flask):
@@ -40,7 +75,7 @@ def register_blueprints(app: Flask):
     app.register_blueprint(auth)
     app.register_blueprint(author)
 
-    admin.register_views()
+    # admin.register_views()
 
 
 def register_commands(app: Flask):
