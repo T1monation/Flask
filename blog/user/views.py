@@ -10,9 +10,11 @@ from flask import request
 from blog.models import User
 from blog.extensions import db
 from psycopg2 import IntegrityError
+import requests
 
 
-user = Blueprint("user", __name__, static_folder="../static", url_prefix="/users")
+user = Blueprint("user", __name__, static_folder="../static",
+                 url_prefix="/users")
 
 
 @user.route("/")
@@ -32,7 +34,14 @@ def profile(pk: int):
     if not user:
         raise NotFound(f"User #{pk} dosen't exist!")
 
-    return render_template("users/profile.html", user=user)
+    print(dir(user))
+    # print(user)
+    if user.author:
+        users_articles_count = requests.get(
+            f'http://127.0.0.1:5000/api/articles/{user.author.id}/event_get_count_by_author/').json()
+        return render_template("users/profile.html", user=user, users_articles_count=users_articles_count['method'])
+    else:
+        return render_template("users/profile.html", user=user, users_articles_count=0)
 
 
 @user.route("register", methods=["GET", "POST"])

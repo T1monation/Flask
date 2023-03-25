@@ -1,5 +1,7 @@
 from flask import Flask
 from combojsonapi.spec import ApiSpecPlugin
+from combojsonapi.event import EventPlugin
+from combojsonapi.permission import PermissionPlugin
 from blog import commands
 from blog.extensions import db, login_manager, migrate, csrf, admin, api
 from blog.models import User
@@ -12,7 +14,7 @@ def create_app() -> Flask:
     register_extensions(app)
     register_blueprints(app)
     register_commands(app)
-    register_api_routes()
+
     return app
 
 
@@ -22,6 +24,8 @@ def register_extensions(app):
     csrf.init_app(app)
     admin.init_app(app)
     api.plugins = [
+        EventPlugin(),
+        PermissionPlugin(),
         ApiSpecPlugin(
             app=app,
             tags={
@@ -42,40 +46,21 @@ def register_extensions(app):
         return User.query.get(int(user_id))
 
 
-def register_api_routes():
-    from blog.api.tag import TagDetail, TagList
-    from blog.api.user import UserDetail, UserList
-    from blog.api.article import ArticleDetail, ArticleList
-    from blog.api.author import AuthorDetail, AuthorList
-
-    api.route(TagList, 'tag_list', '/api/tags/', tag='Tag')
-    api.route(TagDetail, 'tag_detail', '/api/tags/<int:id>', tag='Tag')
-
-    api.route(UserList, 'user_list', '/api/users/', tag='User')
-    api.route(UserDetail, 'user_detail', '/api/users/<int:id>', tag='User')
-
-    api.route(AuthorList, 'author_list', '/api/authors/', tag='Author')
-    api.route(AuthorDetail, 'author_detail',
-              '/api/authors/<int:id>', tag='Author')
-
-    api.route(ArticleList, 'article_list', '/api/articles/', tag='Article')
-    api.route(ArticleDetail, 'article_detail',
-              '/api/articles/<int:id>', tag='Article')
-
-
 def register_blueprints(app: Flask):
     from blog.user.views import user
     from blog.article.views import article
     from blog.auth.views import auth
     from blog.author.views import author
+    from blog.api.views import api_blueprint
     from blog import admin
 
     app.register_blueprint(user)
     app.register_blueprint(article)
     app.register_blueprint(auth)
     app.register_blueprint(author)
+    app.register_blueprint(api_blueprint)
 
-    # admin.register_views()
+    admin.register_views()
 
 
 def register_commands(app: Flask):

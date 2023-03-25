@@ -1,17 +1,18 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    Users details
+Users details
 {% endblock %}
 
 {% block body %}
-    <h1>User:</h1>
-    <h2>{{ user.first_name }} {{ user.last_name }}</h2>
-    <h4>{{ user.email }}</h4>
-    <h1>User's articles:</h1>
-    {% for article in user.author.article %}
-            <ul>
-                <li><a href="{{url_for('article.get_article', pk=article.id)}}">{{article.title}}</a></li>
-            </ul>
-        {% endfor %}
+<h1>User:</h1>
+<h2>{{ user.first_name }} {{ user.last_name }}</h2>
+<h4>{{ user.email }}</h4>
+<h1>User's articles:</h1>
+<h3>Articles conut by RPC: {{ users_articles_count }}</h3>
+{% for article in user.author.article %}
+<ul>
+    <li><a href="{{url_for('article.get_article', pk=article.id)}}">{{article.title}}</a></li>
+</ul>
+{% endfor %}
 {% endblock %}
