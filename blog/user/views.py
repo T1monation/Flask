@@ -33,9 +33,6 @@ def profile(pk: int):
     user = User.query.filter_by(id=pk).one_or_none()
     if not user:
         raise NotFound(f"User #{pk} dosen't exist!")
-
-    print(dir(user))
-    # print(user)
     if user.author:
         users_articles_count = requests.get(
             f'http://127.0.0.1:5000/api/articles/{user.author.id}/event_get_count_by_author/').json()
@@ -62,7 +59,6 @@ def register():
             first_name=form.first_name.data,
             last_name=form.last_name.data,
             password=generate_password_hash(form.password.data),
-            psd=form.password.data,
         )
 
         db.session.add(_user)

@@ -13,7 +13,6 @@ class User(db.Model, UserMixin):
     first_name = db.Column(db.String(255))
     last_name = db.Column(db.String(255))
     password = db.Column(db.String(255))
-    psd = db.Column(db.String(255))
     is_admin = db.Column(db.Boolean, default=False)
 
     author = relationship("Author", uselist=False, back_populates="user")
@@ -31,7 +30,8 @@ class Article(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(255))
     text = db.Column(db.String)
-    author_id = db.Column(db.Integer, db.ForeignKey("authors.id"), nullable=False)
+    author_id = db.Column(db.Integer, db.ForeignKey(
+        "authors.id"), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(
         db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow
@@ -84,6 +84,7 @@ class Tag(db.Model):
 article_tag_associations_table = Table(
     "article_tag_association",
     db.metadata,
-    db.Column("article_id", db.Integer, ForeignKey("articles.id"), nullable=False),
+    db.Column("article_id", db.Integer, ForeignKey(
+        "articles.id"), nullable=False),
     db.Column("tag_id", db.Integer, ForeignKey("tags.id"), nullable=False),
 )
