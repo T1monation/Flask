@@ -1,7 +1,5 @@
 #!/bin/sh
 
-poetry install
-
 flask db upgrade
 
 gunicorn wsgi:app
