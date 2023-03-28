@@ -30,7 +30,7 @@ RUN chmod +x ./start_app
 EXPOSE 8000
 EXPOSE 5432
 
-RUN poetry run flask db upgrade
+# RUN poetry run flask db upgrade
 # RUN flask db upgrade
 
 RUN ./start_app
