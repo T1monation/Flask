@@ -29,9 +29,9 @@ ENV DATABASE_URL: postgres://db_for_my_test_app_user:kNa63nTroqfwpdtwRnsdtfOLhlf
 
 EXPOSE 8000
 
-RUN flask db upgrade
+# RUN flask db upgrade
 
-RUN gunicorn wsgi:app
+RUN ./start_app
 
 # ENV DATABASE_URL=postgresql://flask:123456@192.168.1.77/blog
 
