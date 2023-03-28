@@ -21,8 +21,10 @@ COPY . .
 
 RUN poetry install --no-dev
 
+RUN flask db upgrade
+
 EXPOSE 5000
 
 # ENV DATABASE_URL=postgresql://flask:123456@192.168.1.77/blog
 
-CMD [ "python3", "-m", "flask", "run", "--host=0.0.0.0" ]
+CMD [ "gunicorn", "wsgi:app"]
