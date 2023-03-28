@@ -1,7 +1,7 @@
 #!/bin/sh
 
 echo "starting app"
-sleep 20
+sleep 10
 
 echo "start migration"
 poetry run flask db upgrade
