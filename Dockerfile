@@ -28,6 +28,7 @@ RUN chmod +x ./start_app
 # ENTRYPOINT ["./entrypoint.sh"]
 
 EXPOSE 8000
+EXPOSE 5432
 
 # RUN flask db upgrade
 
