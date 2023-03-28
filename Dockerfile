@@ -25,7 +25,7 @@ RUN chmod +x ./entrypoint.sh
 
 ENTRYPOINT ["./entrypoint.sh"]
 
-EXPOSE 5000
+EXPOSE 8000
 
 # ENV DATABASE_URL=postgresql://flask:123456@192.168.1.77/blog
 
