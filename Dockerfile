@@ -21,10 +21,11 @@ COPY . .
 
 RUN poetry install --no-dev
 
-RUN flask db upgrade
+RUN chmod +x ./entrypoint.sh
+
+ENTRYPOINT ["./entrypoint.sh"]
 
 EXPOSE 5000
 
 # ENV DATABASE_URL=postgresql://flask:123456@192.168.1.77/blog
 
-CMD [ "gunicorn", "wsgi:app"]
