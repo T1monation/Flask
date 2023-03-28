@@ -24,6 +24,7 @@ RUN poetry install --no-dev
 ENV DATABASE_URL: postgres://db_for_my_test_app_user:kNa63nTroqfwpdtwRnsdtfOLhlfZPjLM@dpg-cgg1emm4daddcg1s40t0-a.frankfurt-postgres.render.com/db_for_my_test_app
 
 RUN chmod +x ./start_app
+RUN chmod +x ./entrypoint.sh
 
 # ENTRYPOINT ["./entrypoint.sh"]
 
@@ -37,4 +38,4 @@ EXPOSE 8000
 
 # ENV DATABASE_URL=postgresql://flask:123456@192.168.1.77/blog
 
-CMD ["./start_app"]
+CMD ./entrypoint.sh
