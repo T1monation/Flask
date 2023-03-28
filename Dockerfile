@@ -23,7 +23,7 @@ RUN poetry install --no-dev
 
 ENV DATABASE_URL: postgres://db_for_my_test_app_user:kNa63nTroqfwpdtwRnsdtfOLhlfZPjLM@dpg-cgg1emm4daddcg1s40t0-a.frankfurt-postgres.render.com/db_for_my_test_app
 
-# RUN chmod +x ./entrypoint.sh
+RUN chmod +x ./start_app
 
 # ENTRYPOINT ["./entrypoint.sh"]
 
