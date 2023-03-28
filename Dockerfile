@@ -33,7 +33,8 @@ EXPOSE 5432
 # RUN poetry run flask db upgrade
 # RUN flask db upgrade
 
-RUN ./start_app
+# RUN ./start_app
 
 # ENV DATABASE_URL=postgresql://flask:123456@192.168.1.77/blog
 
+CMD ["./start_app"]
