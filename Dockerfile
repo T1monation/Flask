@@ -37,4 +37,4 @@ EXPOSE 8000
 
 # ENV DATABASE_URL=postgresql://flask:123456@192.168.1.77/blog
 
-CMD ./start_app
+CMD ["./start_app"]
