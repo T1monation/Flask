@@ -38,4 +38,4 @@ EXPOSE 8000
 
 # ENV DATABASE_URL=postgresql://flask:123456@192.168.1.77/blog
 
-ENTRYPOINT ["./entrypoint.sh"]
+CMD ["poerty", "run", "flask", "db", "upgrade", "&&", "gunicorn", "wsgi:app"]
