@@ -1,9 +1,4 @@
 #!/bin/sh
-echo "starting app"
 
-echo "start migration"
-poetry run flask db upgrade
-
-echo "migration done"
 
 gunicorn wsgi:app
