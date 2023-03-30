@@ -35,8 +35,8 @@ EXPOSE 8000
 # RUN flask db upgrade
 
 # RUN ./start_app
-RUN gunicorn wsgi:app
+# RUN gunicorn wsgi:app
 
 # ENV DATABASE_URL=postgresql://flask:123456@192.168.1.77/blog
 
-# CMD ["gunicorn", "wsgi:app"]
+CMD ["./start_app"]
