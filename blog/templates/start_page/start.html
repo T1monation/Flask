@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Blog start page
+{% endblock %}
+
+{% block body %}
+<div class="row">
+  <div class="col">
+    {% if not current_user.is_authenticated %}
+    <h1>Welcom! let's start:</h1>
+    <div class="row">
+      <div class="col">
+        <a class="nav-link" href="{{ url_for('auth.login')}}"><button type="button"
+            class="btn btn-primary btn-lg">Login</button></a>
+      </div>
+      <div class="col">
+        <a class="nav-link" href="{{ url_for('user.register')}}"><button type="button"
+            class="btn btn-secondary btn-lg">Register</button></a>
+      </div>
+    </div>
+    {% endif %}
+    {% if current_user.is_authenticated %}
+    <h1>Welcom, {{ current_user.email }}!</h1>
+    <h2>Let's write something!</h2>
+    <a class="nav-link" href="{{ url_for('article.create_article')}}"><button type="button"
+        class="btn btn-primary btn-lg">Create article</button></a></a>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
