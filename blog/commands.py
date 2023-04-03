@@ -20,7 +20,6 @@ def create_fake_data(num=100):
                     first_name=person.name(),
                     last_name=person.last_name(),
                     password=generate_password_hash(paswd_str),
-                    psd=paswd_str,
                 )
             )
         db.session.commit()

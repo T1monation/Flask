@@ -11,6 +11,7 @@ from blog.models import User
 from blog.extensions import db
 from psycopg2 import IntegrityError
 import requests
+from blog.config import API_URL
 
 
 user = Blueprint("user", __name__, static_folder="../static",
@@ -33,12 +34,9 @@ def profile(pk: int):
     user = User.query.filter_by(id=pk).one_or_none()
     if not user:
         raise NotFound(f"User #{pk} dosen't exist!")
-
-    print(dir(user))
-    # print(user)
     if user.author:
         users_articles_count = requests.get(
-            f'http://127.0.0.1:5000/api/articles/{user.author.id}/event_get_count_by_author/').json()
+            f'{API_URL}/api/articles/{user.author.id}/event_get_count_by_author/').json()
         return render_template("users/profile.html", user=user, users_articles_count=users_articles_count['method'])
     else:
         return render_template("users/profile.html", user=user, users_articles_count=0)
@@ -62,7 +60,6 @@ def register():
             first_name=form.first_name.data,
             last_name=form.last_name.data,
             password=generate_password_hash(form.password.data),
-            psd=form.password.data,
         )
 
         db.session.add(_user)
